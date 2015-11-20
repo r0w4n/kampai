@@ -6,6 +6,7 @@ It will only caputre images during daylight hours.
 * rsync
 * avconv or ffmpeg
 * Screen (remote server)
+
 ## Settings
 Edit the settings.cfg file:
 * *savePath* - Where to save the caputred images
