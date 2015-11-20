@@ -1,5 +1,5 @@
 # Kampai
-Kampai or Cam Pi is a bash script to caputre images from RTSP IP video streams then upload to a remote server, followed by executing a script on the remote server.
+Kampai is a bash script to caputre images from RTSP IP video streams; uploading to a remote server and executing a script on that server.
 It will only caputre images during daylight hours.
 ## Requirements
 * [sunwait](https://www.risacher.org/sunwait/)
