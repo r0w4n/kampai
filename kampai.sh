@@ -2,12 +2,11 @@
 
 main() {
     source settings.cfg
-
     epoch=`/bin/date +%s`
 
     if [ isNightTime ]; then
         echo "exiting..."
-        #exit
+        exit
     fi
 
     for camera in "${!cameras[@]}"
