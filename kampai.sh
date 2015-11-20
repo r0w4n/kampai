@@ -20,7 +20,6 @@ main() {
 
 function upload() {
     /usr/bin/rsync -avzhe ssh --include '*.jpg' --exclude '*' --remove-source-files $savePath $remoteServer:"$remoteImagePath"
-    #/usr/bin/rsync -avzhe ssh --include '*.jpg' --exclude '*' --remove-source-files /mnt/ram/ dsgccouk@dsgc.co.uk:~/kampai/
 }
 
 function executeRemote() {
