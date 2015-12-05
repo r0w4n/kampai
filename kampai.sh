@@ -32,7 +32,7 @@ function capture() {
 }
 
 function isNightTime() {
-    now=`/bin/date -d "+30 minutes"  +%H%M`
+    now=`/bin/date -d "-30 minutes" +%H%M`
 
     if [ $now -gt $(getSunset) -o $now -lt $(getSunrise) ]; then
         return 0
