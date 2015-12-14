@@ -5,7 +5,7 @@ main() {
     epoch=`/bin/date +%s`
 
     if isNightTime ; then
-        echo "exiting..."
+        echo "sunrise:$(getSunrise) sunset:$(getSunset)  exiting..."
         exit
     fi
 
@@ -42,11 +42,14 @@ function isNightTime() {
 }
 
 function getSunrise() {
+    #/usr/bin/sunwait -p $longitude $latitude | /bin/grep -Po '(?<=Sun rises )(\d+)'
     /usr/bin/sunwait -p $longitude $latitude | /bin/grep -Po '(?<= Civil twilight starts )(\d+)'
 }
 
 function getSunset() {
+    #/usr/bin/sunwait -p $longitude $latitude | /bin/grep -Po '(?<=sets )(\d+)'
     /usr/bin/sunwait -p $longitude $latitude | /bin/grep -Po '(?<=Civil twilight starts \d{4} UTC, ends )(\d+)'
 }
 
 main "$@"
+
