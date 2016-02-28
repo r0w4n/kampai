@@ -32,7 +32,7 @@ function capture() {
 }
 
 function isNightTime() {
-    now=`/bin/date +%H%M`
+    now=`/bin/date +%s`
 
     if [ $now -gt $(getSunset) -o $now -lt $(getSunrise) ]; then
         return 0
@@ -42,13 +42,15 @@ function isNightTime() {
 }
 
 function getSunrise() {
+    /usr/local/bin/suncal dawn
     #/usr/bin/sunwait -p $longitude $latitude | /bin/grep -Po '(?<=Sun rises )(\d+)'
-    /usr/bin/sunwait -p $longitude $latitude | /bin/grep -Po '(?<= Civil twilight starts )(\d+)'
+    #/usr/bin/sunwait -p $longitude $latitude | /bin/grep -Po '(?<= Civil twilight starts )(\d+)'
 }
 
 function getSunset() {
+    /usr/local/bin/suncal dusk
     #/usr/bin/sunwait -p $longitude $latitude | /bin/grep -Po '(?<=sets )(\d+)'
-    /usr/bin/sunwait -p $longitude $latitude | /bin/grep -Po '(?<=Civil twilight starts \d{4} UTC, ends )(\d+)'
+    #/usr/bin/sunwait -p $longitude $latitude | /bin/grep -Po '(?<=Civil twilight starts \d{4} UTC, ends )(\d+)'
 }
 
 main "$@"
