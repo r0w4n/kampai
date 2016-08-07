@@ -42,7 +42,7 @@ function isNightTime() {
 }
 
 function getSunrise() {
-    /usr/local/bin/suncal dawn
+    date --date='TZ="Europe/London" 08:00' +%s
     #/usr/bin/sunwait -p $longitude $latitude | /bin/grep -Po '(?<=Sun rises )(\d+)'
     #/usr/bin/sunwait -p $longitude $latitude | /bin/grep -Po '(?<= Civil twilight starts )(\d+)'
 }
