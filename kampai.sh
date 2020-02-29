@@ -33,7 +33,7 @@ function executeRemote() {
 
 function capture() {
     camera=$1
-    /usr/bin/avconv -i rtsp://${cameras[$camera]} -frames:v 1 -f image2 -vf scale=960:-1 -qscale:v 2 $savePath$camera-$epoch.jpg
+    /usr/bin/ffmpeg -i rtsp://${cameras[$camera]} -vframes 1 -f image2 -vf scale=-1:1080 $savePath$camera-$epoch.jpg
 }
 
 function isNightTime() {
