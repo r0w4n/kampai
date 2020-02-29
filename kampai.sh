@@ -23,7 +23,6 @@ function backup() {
     cp $savePath*.jpg $backupPath 
 }
 
-
 function upload() {
     /usr/bin/rsync -avzhe ssh --include '*.jpg' --exclude '*' --remove-source-files $savePath $remoteServer:"$remoteImagePath"
 }
