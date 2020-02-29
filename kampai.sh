@@ -13,10 +13,16 @@ main() {
     do
         capture $camera
     done
-
+    
+    backup
     upload
     executeRemote
 }
+
+function backup() {
+    cp $savePath*.jpg $backupPath 
+}
+
 
 function upload() {
     /usr/bin/rsync -avzhe ssh --include '*.jpg' --exclude '*' --remove-source-files $savePath $remoteServer:"$remoteImagePath"
@@ -43,14 +49,10 @@ function isNightTime() {
 
 function getSunrise() {
     date --date='TZ="Europe/London" 08:00' +%s
-    #/usr/bin/sunwait -p $longitude $latitude | /bin/grep -Po '(?<=Sun rises )(\d+)'
-    #/usr/bin/sunwait -p $longitude $latitude | /bin/grep -Po '(?<= Civil twilight starts )(\d+)'
 }
 
 function getSunset() {
     /usr/local/bin/suncal dusk
-    #/usr/bin/sunwait -p $longitude $latitude | /bin/grep -Po '(?<=sets )(\d+)'
-    #/usr/bin/sunwait -p $longitude $latitude | /bin/grep -Po '(?<=Civil twilight starts \d{4} UTC, ends )(\d+)'
 }
 
 main "$@"
