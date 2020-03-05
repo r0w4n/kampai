@@ -14,10 +14,11 @@ main() {
         cameraCopy $camera
     done
 
-    executeRemote
+    #executeRemote
 }
 
 function cameraCopy() {
+    camera=$1
     /usr/bin/wget -O $backupPath$camera-$epoch.jpg "${cameras[$camera]}"
     /usr/bin/scp $backupPath$camera-$epoch.jpg $remoteServer:$remoteImagePath
 }
@@ -31,8 +32,7 @@ function hasSunSet() {
 }
 
 function executeRemote() {
-    ssh $remoteServer $remoteScript
+   ssh $remoteServer screen -d -m $remoteScript
 }
 
 main "$@"
-
