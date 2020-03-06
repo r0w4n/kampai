@@ -3,28 +3,37 @@
 main() {
     source settings.cfg
     epoch=`/bin/date +%s`
+    saveDir=$backupPath$(date +"%d-%m-%Y")/
 
     if hasSunSet; then
         echo "passed sunset, exiting..."
         exit
     fi
 
-    for camera in "${!cameras[@]}"
+    /bin/mkdir -p $saveDir
+    for camera in "${!cameras[@]}" 
     do
-        cameraCopy $camera
+        cameraCopy $camera $saveDir
     done
 
-    #executeRemote
+    upload $saveDir
+    executeRemote
 }
 
 function cameraCopy() {
     camera=$1
-    /usr/bin/wget -O $backupPath$camera-$epoch.jpg "${cameras[$camera]}"
-    /usr/bin/scp $backupPath$camera-$epoch.jpg $remoteServer:$remoteImagePath
+    saveDir=$2
+
+    /usr/bin/wget -O $saveDir$camera-$epoch.jpg "${cameras[$camera]}"
+}
+
+function upload() {
+    saveDir=$1
+    /usr/bin/rsync -avzhe ssh --include '*.jpg' --exclude '*' $saveDir $remoteSer$
 }
 
 function hasSunSet() {
-    if [ "$(/usr/local/bin/sunwait civil poll $longitude $latitude)" == "NIGHT" ]; then
+    if [ "$(/usr/local/bin/sunwait civil poll $longitude $latitude)" == "NIGHT" ]$
         return 0
     fi
 
