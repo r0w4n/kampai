@@ -1,6 +1,6 @@
 declare -A cameras
-cameras[cam1]=admin:12345@192.168.1.100:554
-cameras[cam2]=admin:12345@192.168.1.101:554
+cameras[cam1]=http://admin:password@192.168.1.100/ISAPI/Streaming/channels/101/picture
+cameras[cam2]=http://admin:password@192.168.1.101/ISAPI/Streaming/channels/101/picture
 
 savePath=/mnt/ram/
 backupPath=/mnt/backup/
