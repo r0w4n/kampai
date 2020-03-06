@@ -5,23 +5,19 @@ main() {
     epoch=$(/bin/date +%s)
     saveDir=$backupPath$(/bin/date +"%d-%m-%Y")/
 
-    if hasSunSet; then
-        echo "passed sunset, exiting..."
-        exit
-    fi
-
-    /bin/mkdir -p $saveDir
     for camera in "${!cameras[@]}" 
     do
-        cameraCopy $camera $saveDir
+        cameraCopy
     done
 
-    upload $saveDir
-    executeRemote
+    if ! hasSunSet; then
+        upload
+        executeRemote
+    fi
 }
 
 function cameraCopy() {
-    /usr/bin/wget -O $saveDir$camera-$epoch.jpg "${cameras[$camera]}"
+    /usr/bin/curl "${cameras[$camera]}" --create-dirs -o $saveDir$camera-$epoch.jpg
 }
 
 function upload() {
