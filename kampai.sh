@@ -2,8 +2,8 @@
 
 main() {
     source settings.cfg
-    epoch=`/bin/date +%s`
-    saveDir=$backupPath$(date +"%d-%m-%Y")/
+    epoch=$(date +%s)
+    saveDir=$backupPath$(/bin/date +"%d-%m-%Y")/
 
     if hasSunSet; then
         echo "passed sunset, exiting..."
