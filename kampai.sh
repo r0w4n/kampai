@@ -2,56 +2,42 @@
 
 main() {
     source settings.cfg
-    epoch=`/bin/date +%s`
+    epoch=$(/bin/date +%s)
+    saveDir=$backupPath$(/bin/date +"%d-%m-%Y")/
 
-    if isNightTime ; then
-        echo "sunrise:$(getSunrise) sunset:$(getSunset)  exiting..."
+    if hasSunSet; then
+        echo "passed sunset, exiting..."
         exit
     fi
 
-    for camera in "${!cameras[@]}"
+    /bin/mkdir -p $saveDir
+    for camera in "${!cameras[@]}" 
     do
-        capture $camera
+        cameraCopy $camera $saveDir
     done
 
-    backup
-    upload
+    upload $saveDir
     executeRemote
 }
 
-function backup() {
-    cp $savePath*.jpg $backupPath 
+function cameraCopy() {
+    /usr/bin/wget -O $saveDir$camera-$epoch.jpg "${cameras[$camera]}"
 }
 
 function upload() {
-    /usr/bin/rsync -avzhe ssh --include '*.jpg' --exclude '*' --remove-source-files $savePath $remoteServer:"$remoteImagePath"
+    /usr/bin/rsync -avzhe ssh --include '*.jpg' --exclude '*' $saveDir $remoteServer:"$remoteImagePath"
 }
 
-function executeRemote() {
-    ssh $remoteServer screen -d -m $remoteScript
-}
-
-function capture() {
-    camera=$1
-    /usr/bin/ffmpeg -i rtsp://${cameras[$camera]} -vframes 1 -f image2 -vf scale=-1:1080 $savePath$camera-$epoch.jpg
-}
-
-function isNightTime() {
-    now=`/bin/date +%s`
-
-    if [ $now -gt $(getSunset) -o $now -lt $(getSunrise) ]; then
+function hasSunSet() {
+    if [ "$(/usr/local/bin/sunwait civil poll $longitude $latitude)" == "NIGHT" ]; then
         return 0
     fi
 
     return 1
 }
 
-function getSunrise() {
-    date --date='TZ="Europe/London" 08:00' +%s
-}
-
-function getSunset() {
-    /usr/local/bin/suncal dusk
+function executeRemote() {
+   ssh $remoteServer screen -d -m $remoteScript
 }
 
 main "$@"

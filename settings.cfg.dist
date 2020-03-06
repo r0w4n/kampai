@@ -2,7 +2,6 @@ declare -A cameras
 cameras[cam1]=http://admin:password@192.168.1.100/ISAPI/Streaming/channels/101/picture
 cameras[cam2]=http://admin:password@192.168.1.101/ISAPI/Streaming/channels/101/picture
 
-savePath=/mnt/ram/
 backupPath=/mnt/backup/
 
 longitude=90.0000N
