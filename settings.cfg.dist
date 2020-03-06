@@ -2,7 +2,6 @@ declare -A cameras
 cameras[cam1]=admin:12345@192.168.1.100:554
 cameras[cam2]=admin:12345@192.168.1.101:554
 
-savePath=/mnt/ram/
 backupPath=/mnt/backup/
 
 longitude=90.0000N
