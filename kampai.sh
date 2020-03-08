@@ -2,7 +2,6 @@
 
 main() {
     source settings.cfg
-    saveDir=$backupPath$(/bin/date +"%d-%m-%Y")/
 
     for camera in "${!cameras[@]}" 
     do
@@ -17,11 +16,11 @@ main() {
 }
 
 function cameraCopy() {
-    /usr/bin/curl "${cameras[$camera]}" --create-dirs -o $saveDir$camera-$(/bin/date +%s).jpg
+    /usr/bin/curl -v "${cameras[$camera]}" --create-dirs -o $savePath$camera-$(/bin/date +%s).jpg
 }
 
 function upload() {
-    /usr/bin/rsync -avzhe ssh --include '*.jpg' --exclude '*' $saveDir $remoteServer:"$remoteImagePath"
+    /usr/bin/rsync -avzhe ssh --include '*.jpg' --exclude '*' --remove-source-files $savePath $remoteServer:"$remoteImagePath"
 }
 
 function isNight() {
@@ -33,7 +32,7 @@ function isNight() {
 }
 
 function executeRemote() {
-   ssh $remoteServer screen -d -m $remoteScript
+   ssh -v $remoteServer screen -d -m $remoteScript
 }
 
 main "$@"
