@@ -28,7 +28,7 @@ function isNight() {
 }
 
 function executeRemote() {
-   ssh -v $remoteServer screen -d -m $remoteScript
+    ssh -v $remoteServer screen -d -m $remoteScript
 }
 
 main "$@"
