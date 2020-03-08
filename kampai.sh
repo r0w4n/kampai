@@ -10,8 +10,9 @@ main() {
         cameraCopy
     done
 
-    if ! hasSunSet; then
-        upload
+    upload
+    if ! isNight; then
+        echo "executing remote server"
         executeRemote
     fi
 }
@@ -24,7 +25,7 @@ function upload() {
     /usr/bin/rsync -avzhe ssh --include '*.jpg' --exclude '*' $saveDir $remoteServer:"$remoteImagePath"
 }
 
-function hasSunSet() {
+function isNight() {
     if [ "$(/usr/local/bin/sunwait civil poll $longitude $latitude)" == "NIGHT" ]; then
         return 0
     fi
