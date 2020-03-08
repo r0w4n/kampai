@@ -2,7 +2,6 @@
 
 main() {
     source settings.cfg
-    epoch=$(/bin/date +%s)
     saveDir=$backupPath$(/bin/date +"%d-%m-%Y")/
 
     for camera in "${!cameras[@]}" 
@@ -18,7 +17,7 @@ main() {
 }
 
 function cameraCopy() {
-    /usr/bin/curl "${cameras[$camera]}" --create-dirs -o $saveDir$camera-$epoch.jpg
+    /usr/bin/curl "${cameras[$camera]}" --create-dirs -o $saveDir$camera-$(/bin/date +%s).jpg
 }
 
 function upload() {
