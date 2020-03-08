@@ -24,11 +24,7 @@ function upload() {
 }
 
 function isNight() {
-    if [ "$(/usr/local/bin/sunwait civil poll $longitude $latitude)" == "NIGHT" ]; then
-        return 0
-    fi
-
-    return 1
+    [ "$(/usr/local/bin/sunwait civil poll $longitude $latitude)" == "NIGHT" ]
 }
 
 function executeRemote() {
