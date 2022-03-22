@@ -3,16 +3,18 @@
 main() {
     source settings.cfg
 
-    for camera in "${!cameras[@]}" 
+    if isNight; then
+        echo "nighttime, exiting..."
+        exit
+    fi
+
+    for camera in "${!cameras[@]}"
     do
         cameraCopy
     done
 
     upload
-    if ! isNight; then
-        echo "executing remote server"
-        executeRemote
-    fi
+    executeRemote
 }
 
 function cameraCopy() {
@@ -20,7 +22,7 @@ function cameraCopy() {
 }
 
 function upload() {
-    /usr/bin/rsync -avzhe ssh --include '*.jpg' --exclude '*' --remove-source-files $savePath $remoteServer:"$remoteImagePath"
+    /usr/bin/rsync -avzhe ssh --include '*.jpg' --exclude '*' --remove-source-files $savePath $remoteServer:"$remoteI$
 }
 
 function isNight() {
