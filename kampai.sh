@@ -1,7 +1,7 @@
 #!/bin/bash
 
 main() {
-    source settings.cfg
+    source "${BASH_SOURCE%/*}/settings.cfg"
 
     if isNight; then
         echo "nighttime, exiting..."
